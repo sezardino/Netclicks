@@ -1,9 +1,9 @@
-const IMG_URL = "https://image.tmdb.org/t/p/w185_and_h278_bestv2";
+export const IMG_URL = 'https://image.tmdb.org/t/p/w185_and_h278_bestv2';
 
-class DBService {
+export default class DBService {
   constructor() {
-    this.API_KAY = "777b90ee2268c6946e784ffda7072fd3";
-    this.SERVER = "https://api.themoviedb.org/3";
+    this.API_KAY = '777b90ee2268c6946e784ffda7072fd3';
+    this.SERVER = 'https://api.themoviedb.org/3';
   }
   async getData(url) {
     const res = await fetch(url);
@@ -15,42 +15,39 @@ class DBService {
   }
 
   getTestData() {
-    return this.getData("test.json");
+    return  this.getData('test.json');
   }
 
   getTestCard() {
-    return this.getData("card.json");
+    return this.getData('card.json');
   }
 
   getSearchResult(query) {
-    return this.getData(
-      `${this.SERVER}/search/tv?api_key=${this.API_KAY}&query=${query}&language=ru-RU&page=1&include_adult=true`
-    );
+    return this.getData(`${this.SERVER}/search/tv?api_key=${this.API_KAY}&query=${query}&language=ru-RU&page=1&include_adult=true`);
   }
 
   getTVShow(id) {
-    return this.getData(
-      `${this.SERVER}/tv/${id}?api_key=${this.API_KAY}&language=ru-RU`
-    );
+    return this.getData(`${this.SERVER}/tv/${id}?api_key=${this.API_KAY}&language=ru-RU`);
   }
 }
 
-const renderCard = function (response) {
-  showList.textContent = "";
+const renderCard = function(response) {
+  showList.textContent = '';
   response.results.forEach((item) => {
+
     let {
       vote_average: vote,
       poster_path: poster,
       backdrop_path: backdrop,
       name: title,
-      id,
+      id
     } = item;
     if (!poster && backdrop) {
       poster = IMG_URL + backdrop;
-    } else if (!poster || !backdrop) {
-      poster = "img/no-poster.jpg";
-      backdrop = "";
-    } else {
+    }else if(!poster || !backdrop) {
+      poster = 'img/no-poster.jpg';
+      backdrop = '';
+    }else {
       poster = IMG_URL + poster;
       backdrop = IMG_URL + backdrop;
     }
@@ -59,11 +56,13 @@ const renderCard = function (response) {
     if (vote) {
       createVote = `<span class="tv-card__vote">${vote}</span>`;
     } else {
-      createVote = "";
+      createVote = '';
     }
 
-    const card = document.createElement("li");
-    card.classList.add("tv-shows__item");
+
+
+    const card = document.createElement('li');
+    card.classList.add('tv-shows__item');
     card.innerHTML = `
       <a href="#" id="${id}" class="tv-card">
           ${createVote}
